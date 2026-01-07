@@ -6,7 +6,7 @@ import CostSummary from './components/CostSummary';
 import ActivityList from './components/ActivityList';
 import StageTimeline from './components/StageTimeline';
 import Charts from './components/Charts';
-import { Sprout, Settings2, Loader2, ShieldCheck, X, FileText, Info, Leaf } from 'lucide-react';
+import { Sprout, Settings2, Loader2, ShieldCheck, X, FileText, Info, Leaf, Scale } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
@@ -17,7 +17,7 @@ const CacaoIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// --- Privacy Modal Refinado ---
+// --- Privacy Modal Refinado (Cumplimiento Play Store & Habeas Data) ---
 const PrivacyModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   if (!isOpen) return null;
   return (
@@ -32,29 +32,49 @@ const PrivacyModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             <ShieldCheck size={32} />
           </div>
           <div>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Legal & Créditos</h2>
-            <p className="text-emerald-600 font-bold text-sm uppercase tracking-widest">Compromiso Ético</p>
+            <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Política de Privacidad</h2>
+            <p className="text-emerald-600 font-bold text-sm uppercase tracking-widest leading-none">Habeas Data & Protección de Datos</p>
           </div>
         </div>
-        <div className="space-y-6 text-slate-600 leading-relaxed overflow-y-auto max-h-[60vh] pr-2 custom-scrollbar">
+        
+        <div className="space-y-6 text-slate-600 leading-relaxed overflow-y-auto max-h-[60vh] pr-4 custom-scrollbar">
           <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
-            <h3 className="font-black text-slate-900 mb-2 uppercase text-xs tracking-widest">🔒 Privacidad Total</h3>
-            <p>Tus datos no salen de aquí. Todo el procesamiento es local, garantizando que tu plan de negocio sea solo tuyo.</p>
+            <h3 className="font-black text-slate-900 mb-2 uppercase text-xs tracking-widest flex items-center gap-2">
+              <Scale size={14} className="text-emerald-600" /> Responsables del Tratamiento
+            </h3>
+            <p className="text-sm">Los responsables del tratamiento de la información técnica generada son <strong>JUAN CARLOS VELASQUEZ FRANCO</strong> y <strong>LUCAS MATEO TABARES FRANCO</strong>.</p>
           </div>
+
           <div>
-            <h3 className="font-black text-slate-900 mb-2 uppercase text-xs tracking-widest">📚 Fuentes Científicas</h3>
-            <p>Basado en metodologías de <strong>Fedecacao</strong> y <strong>Agrosavia</strong>. Esta herramienta es un simulador independiente para apoyo al productor.</p>
+            <h3 className="font-black text-slate-900 mb-2 uppercase text-xs tracking-widest">1. Naturaleza de los Datos</h3>
+            <p className="text-sm">CacaoPlan Pro es una herramienta de <strong>procesamiento local</strong>. Esta aplicación NO recolecta, almacena, ni transmite datos personales, biométricos o de geolocalización a servidores externos. Los cálculos de hectáreas y costos se mantienen exclusivamente en la memoria temporal de su dispositivo.</p>
           </div>
+
+          <div>
+            <h3 className="font-black text-slate-900 mb-2 uppercase text-xs tracking-widest">2. Finalidad de la Información</h3>
+            <p className="text-sm">La información ingresada tiene como única finalidad la simulación técnica de costos y labores agrícolas. No se realizan perfiles de usuario ni se comparte información con terceros con fines comerciales.</p>
+          </div>
+
+          <div>
+            <h3 className="font-black text-slate-900 mb-2 uppercase text-xs tracking-widest">3. Derechos del Usuario (Habeas Data)</h3>
+            <p className="text-sm">En cumplimiento de la Ley 1581 de 2012, usted como usuario tiene derecho a conocer, actualizar y rectificar sus datos. Al no existir una base de datos centralizada, sus derechos se ejercen mediante el control total de la aplicación en su dispositivo (borrar caché/datos del navegador elimina toda su información).</p>
+          </div>
+
           <div className="pt-6 border-t border-slate-100">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Autores del Proyecto</p>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-emerald-900 text-white p-4 rounded-2xl font-bold text-center">Juan C. Velásquez F.</div>
-              <div className="bg-emerald-900 text-white p-4 rounded-2xl font-bold text-center">Lucas M. Tabares F.</div>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 text-center">Autores y Desarrolladores</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-emerald-900 text-white p-5 rounded-2xl font-bold text-center text-sm shadow-inner shadow-black/20">
+                JUAN CARLOS VELASQUEZ FRANCO
+              </div>
+              <div className="bg-emerald-900 text-white p-5 rounded-2xl font-bold text-center text-sm shadow-inner shadow-black/20">
+                LUCAS MATEO TABARES FRANCO
+              </div>
             </div>
           </div>
         </div>
+        
         <button onClick={onClose} className="w-full mt-8 bg-emerald-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-emerald-200 hover:bg-emerald-700 transition-all active:scale-95">
-          Entendido
+          Aceptar y Continuar
         </button>
       </div>
     </div>
@@ -88,23 +108,60 @@ const App: React.FC = () => {
     if (!contentRef.current) return;
     setIsDownloading(true);
     try {
-      const canvas = await html2canvas(contentRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
-      const img = canvas.toDataURL('image/png');
+      const canvas = await html2canvas(contentRef.current, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        windowWidth: 1200, 
+        onclone: (clonedDoc) => {
+          const report = clonedDoc.getElementById('report-content');
+          if (report) {
+            report.style.boxShadow = 'none';
+            report.style.borderRadius = '0';
+            report.style.border = 'none';
+            report.classList.remove('p-8', 'md:p-16', 'space-y-16');
+            report.classList.add('p-8', 'space-y-8');
+            const cards = report.querySelectorAll('.p-8');
+            cards.forEach(card => {
+                card.classList.remove('p-8');
+                card.classList.add('p-4', 'border', 'border-slate-300');
+                (card as HTMLElement).style.boxShadow = 'none';
+            });
+            const cells = report.querySelectorAll('td, th');
+            cells.forEach(cell => {
+                cell.classList.remove('py-4');
+                cell.classList.add('py-1');
+                (cell as HTMLElement).style.fontSize = '10px';
+            });
+          }
+        }
+      });
+
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const w = pdf.internal.pageSize.getWidth();
       const h = pdf.internal.pageSize.getHeight();
       const imgH = (canvas.height * w) / canvas.width;
-      let left = imgH, pos = 0;
-      pdf.addImage(img, 'PNG', 0, pos, w, imgH);
-      left -= h;
-      while (left >= 0) {
-        pos = left - imgH;
+      
+      let heightLeft = imgH;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, w, imgH);
+      heightLeft -= h;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgH;
         pdf.addPage();
-        pdf.addImage(img, 'PNG', 0, pos, w, imgH);
-        left -= h;
+        pdf.addImage(imgData, 'PNG', 0, position, w, imgH);
+        heightLeft -= h;
       }
-      pdf.save('Reporte-CacaoPlan-Pro.pdf');
-    } catch (e) { console.error(e); } finally { setIsDownloading(false); }
+
+      pdf.save(`Plan-Cacao-${config.hectares}HA.pdf`);
+    } catch (e) {
+      console.error('Error al generar PDF:', e);
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   return (
@@ -143,37 +200,47 @@ const App: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             <div className="space-y-3">
-              <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Área (Hectáreas)</label>
+              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Área (Hectáreas)</label>
               <div className="relative">
-                <input type="number" value={config.hectares} onChange={e => setConfig({...config, hectares: parseFloat(e.target.value) || 0})} className="w-full bg-slate-50 border-2 border-slate-100 px-6 py-4 rounded-2xl font-black text-xl outline-none focus:border-emerald-500 focus:bg-white transition-all" />
-                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black">HA</span>
+                <input 
+                  type="number" 
+                  value={config.hectares} 
+                  onChange={e => setConfig({...config, hectares: parseFloat(e.target.value) || 0})} 
+                  className="w-full bg-slate-100/50 border-2 border-slate-200 px-6 py-4 rounded-2xl font-black text-xl text-slate-900 outline-none focus:border-emerald-500 focus:bg-white transition-all appearance-none" 
+                />
+                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-500 font-black">HA</span>
               </div>
             </div>
             <div className="space-y-3">
-              <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Costo Jornal</label>
+              <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Costo Jornal</label>
               <div className="relative">
-                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 font-black">$</span>
-                <input type="number" value={config.laborCost} onChange={e => setConfig({...config, laborCost: parseFloat(e.target.value) || 0})} className="w-full bg-slate-50 border-2 border-slate-100 pl-12 pr-6 py-4 rounded-2xl font-black text-xl outline-none focus:border-emerald-500 focus:bg-white transition-all" />
+                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 font-black">$</span>
+                <input 
+                  type="number" 
+                  value={config.laborCost} 
+                  onChange={e => setConfig({...config, laborCost: parseFloat(e.target.value) || 0})} 
+                  className="w-full bg-slate-100/50 border-2 border-slate-200 pl-12 pr-6 py-4 rounded-2xl font-black text-xl text-slate-900 outline-none focus:border-emerald-500 focus:bg-white transition-all appearance-none" 
+                />
               </div>
             </div>
             <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100 flex items-center gap-4">
               <div className="bg-white p-2.5 rounded-xl shadow-sm"><Info className="text-emerald-600" /></div>
-              <p className="text-xs text-emerald-900 font-bold leading-snug">Cálculo basado en modelo de alta densidad y fertilización balanceada.</p>
+              <p className="text-xs text-emerald-900 font-bold leading-snug">Simulador basado en proyecciones técnicas locales de alta eficiencia.</p>
             </div>
           </div>
         </section>
 
         {/* Contenedor Reporte (PDF) */}
-        <div ref={contentRef} className="bg-white rounded-[3.5rem] p-8 md:p-16 shadow-2xl border border-slate-100 space-y-16">
+        <div id="report-content" ref={contentRef} className="bg-white rounded-[3.5rem] p-8 md:p-16 shadow-2xl border border-slate-100 space-y-16">
           <div className="hidden print:block border-b-4 border-emerald-900 pb-10 mb-10">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-5xl font-black text-emerald-950 uppercase tracking-tighter">Reporte Técnico</h1>
-                <p className="text-lg text-slate-500 font-bold mt-2">CacaoPlan Pro v1.5 | Planificación Integral de Cultivo</p>
+                <h1 className="text-5xl font-black text-emerald-950 uppercase tracking-tighter">Plan Maestro Cacao</h1>
+                <p className="text-lg text-slate-500 font-bold mt-2">CacaoPlan Pro v1.6 | Gestión Inteligente del Campo</p>
               </div>
               <div className="text-right">
                 <p className="text-2xl font-black text-slate-900">{new Date().toLocaleDateString()}</p>
-                <p className="text-xs text-slate-400 font-black uppercase tracking-widest">Fecha de Proyección</p>
+                <p className="text-xs text-slate-400 font-black uppercase tracking-widest">Fecha de Generación</p>
               </div>
             </div>
           </div>
@@ -194,21 +261,28 @@ const App: React.FC = () => {
           </div>
 
           <div className="hidden print:block pt-12 border-t border-slate-100 text-center">
-             <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.5em]">Fedecacao • Agrosavia • Proyección Agrícola Independiente</p>
+             <div className="flex justify-center gap-10 mb-4 text-xs font-black text-slate-900">
+                <span>JUAN CARLOS VELASQUEZ FRANCO</span>
+                <span>LUCAS MATEO TABARES FRANCO</span>
+             </div>
+             <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.5em]">Planificación Técnica Agroindustrial • Gestión de Datos Local</p>
           </div>
         </div>
       </main>
 
       <footer className="mt-20 py-20 bg-emerald-950 text-white text-center">
         <div className="container mx-auto px-6 flex flex-col items-center gap-8">
-          <div className="flex items-center gap-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-             <div className="bg-white/10 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">Modelo Fedecacao</div>
-             <div className="bg-white/10 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">Algoritmo Agrosavia</div>
-          </div>
           <div className="flex flex-col md:flex-row gap-8 items-center text-sm font-bold text-emerald-400/60">
-            <p>© 2024 CacaoPlan Pro - Juan Carlos & Lucas Mateo Velásquez F.</p>
-            <button onClick={() => setIsPrivacyOpen(true)} className="flex items-center gap-2 hover:text-emerald-300 transition-colors bg-white/5 px-6 py-2 rounded-full border border-white/10">
-              <ShieldCheck size={16} /> Ver Créditos & Ética de Datos
+            <div className="flex flex-col gap-1 items-center md:items-start">
+               <p>© {new Date().getFullYear()} CacaoPlan Pro - Gestión Inteligente del Campo</p>
+               <div className="flex flex-col md:flex-row gap-x-4 text-[10px] uppercase tracking-wider text-white/40">
+                  <span>JUAN CARLOS VELASQUEZ FRANCO</span>
+                  <span className="hidden md:inline">•</span>
+                  <span>LUCAS MATEO TABARES FRANCO</span>
+               </div>
+            </div>
+            <button onClick={() => setIsPrivacyOpen(true)} className="flex items-center gap-2 hover:text-emerald-300 transition-colors bg-white/5 px-6 py-3 rounded-2xl border border-white/10">
+              <ShieldCheck size={16} /> Política de Privacidad & Habeas Data
             </button>
           </div>
         </div>

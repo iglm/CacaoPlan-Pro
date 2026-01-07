@@ -1,19 +1,13 @@
 
 {
   "name": "cacaoplan-pro",
-  "version": "1.0.3",
-  "private": true,
+  "version": "1.0.1",
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "lucide-react": "^0.562.0",
-    "recharts": "^2.15.0",
+    "recharts": "^3.6.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.4.1",
-    "postcss": "^8.4.35",
-    "autoprefixer": "^10.4.18"
   }
 }
