@@ -42,7 +42,7 @@ const PrivacyModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             <h3 className="font-black text-slate-900 mb-2 uppercase text-xs tracking-widest flex items-center gap-2">
               <Scale size={14} className="text-emerald-600" /> Responsables del Tratamiento
             </h3>
-            <p className="text-sm">Los responsables del tratamiento de la información técnica generada son <strong>JUAN CARLOS VELASQUEZ FRANCO</strong> y <strong>LUCAS MATEO TABARES FRANCO</strong>.</p>
+            <p className="text-sm">Los responsables del tratamiento de la información técnica generada son <strong>JUAN CARLOS VELASQUEZ FRANCO</strong>, <strong>LUCAS MATEO TABARES FRANCO</strong> y <strong>ALFREDO GARCIA LLANO</strong>.</p>
           </div>
 
           <div>
@@ -61,13 +61,16 @@ const PrivacyModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           </div>
 
           <div className="pt-6 border-t border-slate-100">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 text-center">Autores y Desarrolladores</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-emerald-900 text-white p-5 rounded-2xl font-bold text-center text-sm shadow-inner shadow-black/20">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 text-center">Equipo de Desarrollo</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="bg-emerald-900 text-white p-4 rounded-2xl font-bold text-center text-[11px] shadow-inner shadow-black/20">
                 JUAN CARLOS VELASQUEZ FRANCO
               </div>
-              <div className="bg-emerald-900 text-white p-5 rounded-2xl font-bold text-center text-sm shadow-inner shadow-black/20">
+              <div className="bg-emerald-900 text-white p-4 rounded-2xl font-bold text-center text-[11px] shadow-inner shadow-black/20">
                 LUCAS MATEO TABARES FRANCO
+              </div>
+              <div className="bg-emerald-900 text-white p-4 rounded-2xl font-bold text-center text-[11px] shadow-inner shadow-black/20">
+                ALFREDO GARCIA LLANO
               </div>
             </div>
           </div>
@@ -261,9 +264,10 @@ const App: React.FC = () => {
           </div>
 
           <div className="hidden print:block pt-12 border-t border-slate-100 text-center">
-             <div className="flex justify-center gap-10 mb-4 text-xs font-black text-slate-900">
+             <div className="flex justify-center flex-wrap gap-x-10 gap-y-2 mb-4 text-[10px] font-black text-slate-900">
                 <span>JUAN CARLOS VELASQUEZ FRANCO</span>
                 <span>LUCAS MATEO TABARES FRANCO</span>
+                <span>ALFREDO GARCIA LLANO</span>
              </div>
              <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.5em]">Planificación Técnica Agroindustrial • Gestión de Datos Local</p>
           </div>
@@ -279,6 +283,8 @@ const App: React.FC = () => {
                   <span>JUAN CARLOS VELASQUEZ FRANCO</span>
                   <span className="hidden md:inline">•</span>
                   <span>LUCAS MATEO TABARES FRANCO</span>
+                  <span className="hidden md:inline">•</span>
+                  <span>ALFREDO GARCIA LLANO</span>
                </div>
             </div>
             <button onClick={() => setIsPrivacyOpen(true)} className="flex items-center gap-2 hover:text-emerald-300 transition-colors bg-white/5 px-6 py-3 rounded-2xl border border-white/10">
